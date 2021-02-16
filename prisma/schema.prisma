@@ -7,13 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        Int     @default(autoincrement()) @id
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User?   @relation(fields: [authorId], references: [id])
-  authorId  Int?
+model Tweet {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  content String
+  author User? @relation(fields: [authorId], references: [id])
+  authorId Int?
 }
 
 model User {
@@ -21,5 +20,17 @@ model User {
   email    String  @unique
   password String  @default("")
   name     String?
-  posts    Post[]
+  tweets    Tweet[]
+  Profile Profile?
+}
+
+model Profile {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  bio String?
+  location String?
+  website String?
+  avatar String?
+  userId Int? @unique
+  User User? @relation(fields: [userId], references: [id])
 }
