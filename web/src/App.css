@@ -1,0 +1,6 @@
+:root {
+  --main-color: #55abee;
+  --button-hover-color: #228dcf;
+}
+
+@import './styles/login.css';
