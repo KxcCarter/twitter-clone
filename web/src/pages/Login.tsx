@@ -41,7 +41,7 @@ export default function Login() {
   })
 
   return (
-    <div>
+    <div className="container">
       <img src={xbones} alt="logo" style={{ width: '50px' }} className="logo" />
       <h3>Log in to Fake Twitter</h3>
       <Formik

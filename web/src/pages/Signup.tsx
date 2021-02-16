@@ -3,7 +3,9 @@ import { gql, useMutation } from '@apollo/client'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+//
+import xbones from '../styles/assets/xbones.png'
 
 const SIGNUP_MUTATION = gql`
   mutation signup($name: String, $email: String!, $password: String!) {
@@ -48,8 +50,9 @@ export default function Signup() {
   })
 
   return (
-    <div>
-      <h1>Signup</h1>
+    <div className="container">
+      <img src={xbones} alt="logo" style={{ width: '50px' }} className="logo" />
+      <h3>Sign up</h3>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -79,9 +82,15 @@ export default function Signup() {
             placeholder="Confirm Password"
           />
           <ErrorMessage name="confirmPassword" component={'div'} />
-          <button type="submit">Signup</button>
+          <button className="login-button" type="submit">
+            <span>Sign up</span>
+          </button>
         </Form>
       </Formik>
+      <div className="register">
+        <h4>Already hav an account?</h4>
+        <Link to="/login">Log in</Link>
+      </div>
     </div>
   )
 }
