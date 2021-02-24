@@ -8,6 +8,7 @@ import { Link, useHistory } from 'react-router-dom'
 //
 
 import xbones from '../styles/assets/xbones.png'
+import '../styles/login.css'
 
 const LOGIN_MUTATION = gql`
   mutation login($email: String!, $password: String!) {

@@ -10,16 +10,14 @@ const UPDATE_PROFILE_MUTATION = gql`
     $id: Int!
     $bio: String
     $location: String
-    $website: String
-  ) # $avatar: String
-  {
+    $website: String # $avatar: String
+  ) {
     updateProfile(
       id: $id
       bio: $bio
       location: $location
-      website: $website
-    ) #   avatar: $avatar
-    {
+      website: $website #   avatar: $avatar
+    ) {
       id
     }
   }
@@ -76,7 +74,9 @@ const UpdateProfile = () => {
 
   return (
     <div>
-      <button onClick={openModal}>Update Profile</button>
+      <button onClick={openModal} className="edit-button">
+        Edit Profile
+      </button>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}

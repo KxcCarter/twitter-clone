@@ -6,6 +6,7 @@ import * as Yup from 'yup'
 import { Link, useHistory } from 'react-router-dom'
 //
 import xbones from '../styles/assets/xbones.png'
+import '../styles/login.css'
 
 const SIGNUP_MUTATION = gql`
   mutation signup($name: String, $email: String!, $password: String!) {
