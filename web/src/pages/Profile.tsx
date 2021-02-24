@@ -4,6 +4,10 @@ import CreateProfile from '../components/CreateProfile'
 import UpdateProfile from '../components/UpdateProfile'
 import { Link, useHistory } from 'react-router-dom'
 
+//
+
+import LeftNav from '../components/LeftNav'
+
 import '../styles/primary.css'
 import '../styles/profile.css'
 
@@ -32,7 +36,9 @@ const Profile = () => {
   return (
     <>
       <div className="primary">
-        <div className="left">Left Nav</div>
+        <div className="left">
+          <LeftNav />
+        </div>
         <div className="profile">
           <div className="profile-info">
             <div className="profile-head">
@@ -44,7 +50,15 @@ const Profile = () => {
               </span>
             </div>
             <div className="avatar">
-              <i className="fa fa-user fa-5x" aria-hidden="true"></i>
+              {data.me.Profile.avatar ? (
+                <img
+                  src={data.me.Profile.avatar}
+                  style={{ width: '150px', borderRadius: '50%' }}
+                  alt="avatar"
+                />
+              ) : (
+                <i className="fa fa-user fa-5x" aria-hidden="true"></i>
+              )}
             </div>
             <div className="make-profile">
               {data.me.Profile.id ? <UpdateProfile /> : <CreateProfile />}
