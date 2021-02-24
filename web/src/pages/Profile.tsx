@@ -1,5 +1,7 @@
 import React from 'react'
 import { gql, useQuery } from '@apollo/client'
+import CreateProfile from '../components/CreateProfile'
+import UpdateProfile from '../components/UpdateProfile'
 
 const ME_QUERY = gql`
   query me {
@@ -23,7 +25,7 @@ const Profile = () => {
   return (
     <div className="container">
       <h1>Profile</h1>
-      {/* {data.me.Profile.id ? } */}
+      {data.me.Profile.id ? <UpdateProfile /> : <CreateProfile />}
       <p>{data.me.Profile.bio}</p>
       <p>{data.me.Profile.location}</p>
       <p>{data.me.Profile.website}</p>

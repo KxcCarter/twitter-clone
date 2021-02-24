@@ -54,7 +54,7 @@ export const Mutation = mutationType({
       },
     })
 
-    // create profile
+    // ***** CREATE PROFILE
 
     t.field('createProfile', {
       type: 'Profile',
@@ -76,6 +76,7 @@ export const Mutation = mutationType({
       },
     })
 
+    // ***** UPDATE PROFILE
     t.field('updateProfile', {
       type: 'Profile',
       args: {
