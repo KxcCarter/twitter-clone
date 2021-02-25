@@ -11,10 +11,11 @@ import LeftNav from '../components/LeftNav'
 import '../styles/primary.css'
 import '../styles/profile.css'
 
-const ME_QUERY = gql`
+export const ME_QUERY = gql`
   query me {
     me {
       id
+      name
       Profile {
         id
         bio
@@ -31,7 +32,6 @@ const Profile = () => {
   const { loading, error, data } = useQuery(ME_QUERY)
   if (loading) return <p>Loading...</p>
   if (error) return <p>{error.message}</p>
-  console.log(data.me)
 
   return (
     <>
@@ -42,11 +42,11 @@ const Profile = () => {
         <div className="profile">
           <div className="profile-info">
             <div className="profile-head">
-              <span className="back-arrow" onClick={() => history.goBack}>
+              <span className="back-arrow" onClick={() => history.goBack()}>
                 <i className="fa fa-arrow-left" aria-hidden="true"></i>
               </span>
               <span className="nickname">
-                <h3>{data.me.name} fart?</h3>
+                <h3>{data.me.name} </h3>
               </span>
             </div>
             <div className="avatar">
@@ -63,7 +63,7 @@ const Profile = () => {
             <div className="make-profile">
               {data.me.Profile.id ? <UpdateProfile /> : <CreateProfile />}
             </div>
-            <h3 className="name">{data.me.name} fartsssss</h3>
+            <h3 className="name">{data.me.name}</h3>
             {data.me.Profile.id ? (
               <p>
                 <i className="fas fa-link"> </i>

@@ -101,6 +101,25 @@ export const Mutation = mutationType({
       },
     })
 
+    // ***** CREATE TWEET *****
+
+    t.field('createTweet', {
+      type: 'Tweet',
+      args: {
+        content: stringArg(),
+      },
+      resolve: (parent, { content }, ctx) => {
+        const userId = getUserId(ctx)
+        if (!userId) throw new Error('Could not authenticate user.')
+        return ctx.prisma.tweet.create({
+          data: {
+            content,
+            author: { connect: { id: Number(userId) } },
+          },
+        })
+      },
+    })
+
     // t.field('createDraft', {
     //   type: 'Post',
     //   args: {

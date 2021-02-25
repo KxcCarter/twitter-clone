@@ -40,9 +40,9 @@ const ME_QUERY = gql`
 `
 
 // ***** TYPESCRIPT
-interface ProcessEnv {
-  [key: string]: string | undefined
-}
+// interface ProcessEnv {
+//   [key: string]: string | undefined
+// }
 let env = process.env['REACT_APP_CLOUDINARY_API']
 
 interface ProfileValues {
@@ -59,10 +59,8 @@ declare var process: {
   }
 }
 
-console.log(process.env.REACT_APP_CLOUDINARY_API)
-
 const UpdateProfile = () => {
-  const inputFile = useRef(null)
+  const inputFile = useRef<HTMLInputElement | null>(null)
   const [image, setImage] = useState('')
   const [imageLoading, setImageLoading] = useState(false)
   const { loading, error, data } = useQuery(ME_QUERY)
@@ -95,13 +93,12 @@ const UpdateProfile = () => {
     const files = event.target.files
     const data = new FormData()
 
-    console.log(env)
-
     data.append('file', files[0])
-    data.append('upload_preset', 'bhcb3oqk') // not sure about this
+    data.append('upload_preset', 'bhcb3oqk')
     setImageLoading(true)
 
-    const apiURL = process.env as any
+    // const apiURL = process.env as any
+
     const res = await fetch(env, {
       method: 'POST',
       body: data,
@@ -110,11 +107,6 @@ const UpdateProfile = () => {
     const file = await res.json()
     setImage(file.secure_url)
     setImageLoading(false)
-  }
-
-  const handleClick = () => {
-    const node = inputFile.current as any
-    node.click()
   }
 
   return (
@@ -142,7 +134,7 @@ const UpdateProfile = () => {
         ) : (
           <>
             {image ? (
-              <span onClick={handleClick}>
+              <span onClick={() => inputFile.current?.click()}>
                 <img
                   src={image}
                   style={{ width: '150px', borderRadius: '50%' }}
@@ -150,7 +142,7 @@ const UpdateProfile = () => {
                 />
               </span>
             ) : (
-              <span onClick={handleClick}>
+              <span onClick={() => inputFile.current?.click()}>
                 <i className="fa fa-user fa-5x" aria-hidden="true"></i>
               </span>
             )}
