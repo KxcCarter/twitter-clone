@@ -39,6 +39,12 @@ const ME_QUERY = gql`
   }
 `
 
+// ***** TYPESCRIPT
+interface ProcessEnv {
+  [key: string]: string | undefined
+}
+let env = process.env['REACT_APP_CLOUDINARY_API']
+
 interface ProfileValues {
   id: number
   bio: string
@@ -46,6 +52,15 @@ interface ProfileValues {
   website: string
   avatar: string
 }
+
+declare var process: {
+  env: {
+    REACT_APP_CLOUDINARY_API: string
+  }
+}
+
+console.log(process.env.REACT_APP_CLOUDINARY_API)
+
 const UpdateProfile = () => {
   const inputFile = useRef(null)
   const [image, setImage] = useState('')
@@ -77,16 +92,17 @@ const UpdateProfile = () => {
   }
 
   const uploadImage = async (event: any) => {
-    console.log('fart!!!!')
-
     const files = event.target.files
     const data = new FormData()
+
+    console.log(env)
+
     data.append('file', files[0])
     data.append('upload_preset', 'bhcb3oqk') // not sure about this
     setImageLoading(true)
 
-    const apiURL = process as any
-    const res = await fetch(apiURL.env.REACT_APP_CLOUDINARY_API, {
+    const apiURL = process.env as any
+    const res = await fetch(env, {
       method: 'POST',
       body: data,
     })

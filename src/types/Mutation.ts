@@ -85,6 +85,7 @@ export const Mutation = mutationType({
         location: stringArg(),
         website: stringArg(),
         author: stringArg(),
+        avatar: stringArg(),
       },
       resolve: (parent, { id, ...args }, ctx) => {
         const userId = getUserId(ctx)
