@@ -25,7 +25,7 @@ export const Query = queryType({
     t.list.field('tweets', {
       type: 'Tweet',
       resolve: (parent, args, ctx) => {
-        return ctx.prisma.tweet.findMany()
+        return ctx.prisma.tweet.findMany({ orderBy: { createdAt: 'desc' } })
       },
     })
   },

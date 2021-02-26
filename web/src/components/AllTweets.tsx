@@ -3,7 +3,6 @@ import { formatDistance } from 'date-fns'
 import { subDays } from 'date-fns/esm'
 import gql from 'graphql-tag'
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { ME_QUERY } from '../pages/Profile'
 import '../styles/allTweets.css'
 
@@ -43,8 +42,8 @@ const AllTweets = () => {
 
   return (
     <div>
-      {data.tweets.map((tweet: AllTweets) => (
-        <div className="tweet-container">
+      {data.tweets.map((tweet: AllTweets, index: number) => (
+        <div className="tweet-container" key={index}>
           <div className="tweet-header">
             <img
               src={tweet.author.Profile.avatar}

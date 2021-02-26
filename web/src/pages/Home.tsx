@@ -11,6 +11,7 @@ import LeftNav from '../components/LeftNav'
 import '../styles/primary.css'
 import '../styles/home.css'
 import AllTweets from '../components/AllTweets'
+import HomePageTweet from '../components/HomePageTweet'
 
 export const ME_QUERY = gql`
   query me {
@@ -43,9 +44,9 @@ const Home = () => {
         <div className="home">
           <div className="home-header">
             <h3 className="home-title"></h3>
-            <h1>Tweets</h1>
-            <AllTweets />
           </div>
+          <HomePageTweet />
+          <AllTweets />
         </div>
 
         <div className="right">RIGHT?</div>
