@@ -1,6 +1,6 @@
 import { compare, hash } from 'bcryptjs'
 import { sign } from 'jsonwebtoken'
-import { intArg, mutationType, nonNull, stringArg } from 'nexus'
+import { intArg, mutationType, nonNull, nullable, stringArg } from 'nexus'
 import { APP_SECRET, getUserId } from '../utils'
 
 export const Mutation = mutationType({
@@ -139,6 +139,22 @@ export const Mutation = mutationType({
       },
     })
 
+    // ***** DELETE LIKE *****
+
+    t.field('deleteLike', {
+      type: 'LikedTweet',
+      args: {
+        id: nonNull(intArg()),
+      },
+      resolve: (parent, { id }, ctx) => {
+        const userId = getUserId(ctx)
+        if (!userId) throw new Error('Could not authenticate user.')
+        return ctx.prisma.likedTweet.delete({
+          where: { id: id },
+        })
+      },
+    })
+
     // t.field('createDraft', {
     //   type: 'Post',
     //   args: {
@@ -155,19 +171,6 @@ export const Mutation = mutationType({
     //         published: false,
     //         author: { connect: { id: Number(userId) } },
     //       },
-    //     })
-    //   },
-    // })
-
-    // t.nullable.field('publish', {
-    //   type: 'Post',
-    //   args: {
-    //     id: nonNull(intArg()),
-    //   },
-    //   resolve: (parent, { id }, ctx) => {
-    //     return ctx.prisma.post.update({
-    //       where: { id },
-    //       data: { published: true },
     //     })
     //   },
     // })
