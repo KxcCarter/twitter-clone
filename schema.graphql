@@ -8,7 +8,9 @@ type AuthPayload {
 }
 
 type Comment {
+  Comment: Comment
   User: User
+  commentId: Int
   content: String
   createdAt: DateTime!
   id: Int!
@@ -19,6 +21,18 @@ input CommentWhereUniqueInput {
 }
 
 scalar DateTime
+
+type Following {
+  User: User
+  avatar: String!
+  followId: Int!
+  id: Int!
+  name: String!
+}
+
+input FollowingWhereUniqueInput {
+  id: Int
+}
 
 type LikedTweet {
   id: Int!
@@ -33,11 +47,14 @@ input LikedTweetWhereUniqueInput {
 type Mutation {
   createComment(content: String!, id: Int!): Comment
   createProfile(author: String, bio: String, location: String, website: String): Profile
+  createReply(commentId: Int, content: String!, id: Int!): Comment
   createTweet(content: String): Tweet
   deleteLike(id: Int!): LikedTweet
+  follow(avatar: String, followId: Int!, name: String!): Following
   likeTweet(id: Int): LikedTweet
   login(email: String!, password: String!): AuthPayload
   signup(email: String!, name: String, password: String!): AuthPayload
+  unFollow(id: Int!): Following
   updateProfile(author: String, avatar: String, bio: String, id: Int, location: String, website: String): Profile
 }
 
@@ -53,6 +70,7 @@ type Query {
   me: User
   tweet(id: Int!): Tweet
   tweets: [Tweet]
+  user(id: Int!): User
   users: [User]
 }
 
@@ -66,6 +84,7 @@ type Tweet {
 }
 
 type User {
+  Following(after: FollowingWhereUniqueInput, before: FollowingWhereUniqueInput, first: Int, last: Int): [Following!]!
   Profile: Profile
   comments(after: CommentWhereUniqueInput, before: CommentWhereUniqueInput, first: Int, last: Int): [Comment!]!
   email: String!

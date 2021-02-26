@@ -17,6 +17,12 @@ export const ME_QUERY = gql`
     me {
       id
       name
+      Following {
+        id
+        followId
+        name
+        avatar
+      }
       likedTweet {
         id
         tweet {

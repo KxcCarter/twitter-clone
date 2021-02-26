@@ -176,24 +176,68 @@ export const Mutation = mutationType({
       },
     })
 
-    // t.field('createDraft', {
-    //   type: 'Post',
-    //   args: {
-    //     title: nonNull(stringArg()),
-    //     content: stringArg(),
-    //   },
-    //   resolve: (parent, { title, content }, ctx) => {
-    //     const userId = getUserId(ctx)
-    //     if (!userId) throw new Error('Could not authenticate user.')
-    //     return ctx.prisma.post.create({
-    //       data: {
-    //         title,
-    //         content,
-    //         published: false,
-    //         author: { connect: { id: Number(userId) } },
-    //       },
-    //     })
-    //   },
-    // })
+    // ***** CREATE COMMENT REPLY *****
+
+    t.field('createReply', {
+      type: 'Comment',
+      args: {
+        content: nonNull(stringArg()),
+        id: nonNull(intArg()),
+        commentId: intArg(),
+      },
+      resolve: (parent, { content, id, commentId }, ctx) => {
+        const userId = getUserId(ctx)
+        if (!userId) throw new Error('Could not authenticate user.')
+        return ctx.prisma.comment.create({
+          data: {
+            content,
+            User: { connect: { id: Number(userId) } },
+            Tweet: { connect: { id: Number(id) } },
+            Comment: { connect: { id: Number(commentId) } },
+          },
+        })
+      },
+    })
+
+    // ***** FOLLOW *****
+
+    t.field('follow', {
+      type: 'Following',
+      args: {
+        name: nonNull(stringArg()),
+        followId: nonNull(intArg()),
+        avatar: stringArg(),
+      },
+      resolve: (parent, { name, followId, avatar }, ctx) => {
+        const userId = getUserId(ctx)
+        if (!userId) throw new Error('Could not authenticate user.')
+        return ctx.prisma.following.create({
+          data: {
+            name,
+            avatar,
+            followId,
+            User: { connect: { id: Number(userId) } },
+          },
+        })
+      },
+    })
+
+    // ***** UNFOLLOW *****
+
+    t.field('unFollow', {
+      type: 'Following',
+      args: {
+        id: nonNull(intArg()),
+      },
+      resolve: (parent, { id }, ctx) => {
+        const userId = getUserId(ctx)
+        if (!userId) throw new Error('Could not authenticate user.')
+        return ctx.prisma.following.delete({
+          where: { id: id },
+        })
+      },
+    })
+
+    // ***** *****
   },
 })

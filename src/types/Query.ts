@@ -15,9 +15,21 @@ export const Query = queryType({
       },
     })
 
+    t.field('user', {
+      type: 'User',
+      args: { id: nonNull(intArg()) },
+      resolve: (_, { id }, ctx) => {
+        return ctx.prisma.user.findUnique({
+          where: {
+            id: Number(id),
+          },
+        })
+      },
+    })
+
     t.list.field('users', {
       type: 'User',
-      resolve: (parent, args, ctx) => {
+      resolve: (_, args, ctx) => {
         return ctx.prisma.user.findMany()
       },
     })
