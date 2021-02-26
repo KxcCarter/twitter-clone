@@ -44,7 +44,7 @@ const Home = () => {
         </div>
         <div className="home">
           <div className="home-header">
-            <h3 className="home-title"></h3>
+            <h3 className="home-title">Home</h3>
           </div>
           <HomePageTweet />
           <AllTweets />

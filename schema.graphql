@@ -8,6 +8,7 @@ type AuthPayload {
 }
 
 type Comment {
+  User: User
   content: String
   createdAt: DateTime!
   id: Int!
@@ -50,6 +51,7 @@ type Profile {
 
 type Query {
   me: User
+  tweet(id: Int!): Tweet
   tweets: [Tweet]
   users: [User]
 }

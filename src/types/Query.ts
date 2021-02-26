@@ -1,4 +1,4 @@
-import { intArg, nullable, queryType, stringArg } from 'nexus'
+import { intArg, nonNull, nullable, queryType, stringArg } from 'nexus'
 import { getUserId } from '../utils'
 
 export const Query = queryType({
@@ -19,6 +19,18 @@ export const Query = queryType({
       type: 'User',
       resolve: (parent, args, ctx) => {
         return ctx.prisma.user.findMany()
+      },
+    })
+
+    t.field('tweet', {
+      type: 'Tweet',
+      args: { id: nonNull(intArg()) },
+      resolve: (parent, { id }, ctx) => {
+        return ctx.prisma.tweet.findUnique({
+          where: {
+            id: Number(id),
+          },
+        })
       },
     })
 
