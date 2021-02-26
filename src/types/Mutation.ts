@@ -155,6 +155,27 @@ export const Mutation = mutationType({
       },
     })
 
+    // ***** CREATE COMMENT *****
+
+    t.field('createComment', {
+      type: 'Comment',
+      args: {
+        content: nonNull(stringArg()),
+        id: nonNull(intArg()),
+      },
+      resolve: (parent, { content, id }, ctx) => {
+        const userId = getUserId(ctx)
+        if (!userId) throw new Error('Could not authenticate user.')
+        return ctx.prisma.comment.create({
+          data: {
+            content,
+            User: { connect: { id: Number(userId) } },
+            Tweet: { connect: { id: Number(id) } },
+          },
+        })
+      },
+    })
+
     // t.field('createDraft', {
     //   type: 'Post',
     //   args: {

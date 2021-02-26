@@ -14,6 +14,7 @@ model Tweet {
   likes LikedTweet[]
   author User? @relation(fields: [authorId], references: [id])
   authorId Int?
+  comments Comment[]
 }
 
 model User {
@@ -24,6 +25,7 @@ model User {
   tweets    Tweet[]
   Profile   Profile?
   likedTweet LikedTweet[]
+  comments Comment[]
 }
 
 model Profile {
@@ -41,6 +43,12 @@ model LikedTweet {
   id       Int     @default(autoincrement()) @id
   tweet    Tweet
   likedAt  DateTime @default(now())
-  userId   Int? 
+  userId   Int?
   User     User? @relation(fields: [userId], references: [id])
+}
+
+model Comment {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  content String?
 }
