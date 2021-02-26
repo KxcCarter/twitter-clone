@@ -1,31 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
-
 import * as Yup from 'yup'
 import { gql, useMutation } from '@apollo/client'
 //
-import { customStyles } from '../styles/CustomModalStyles'
 import '../styles/tweet.css'
+import { TWEETS_QUERY } from './AllTweets'
 
 const CREATE_TWEET_MUTATION = gql`
   mutation createTweet($content: String) {
     createTweet(content: $content) {
       id
-    }
-  }
-`
-
-const ME_QUERY = gql`
-  query me {
-    me {
-      id
-      Profile {
-        id
-        bio
-        location
-        website
-        avatar
-      }
     }
   }
 `
@@ -43,7 +27,7 @@ const validationSchema = Yup.object({
 
 const HomePageTweet = () => {
   const [createTweet] = useMutation(CREATE_TWEET_MUTATION, {
-    refetchQueries: [{ query: ME_QUERY }],
+    refetchQueries: [{ query: TWEETS_QUERY }],
   })
 
   const initialValues: TweetValues = {

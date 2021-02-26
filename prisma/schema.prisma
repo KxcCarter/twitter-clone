@@ -10,7 +10,8 @@ datasource db {
 model Tweet {
   id Int @id @default(autoincrement())
   createdAt DateTime @default(now())
-  content String
+  content String?
+  likes LikedTweet[]
   author User? @relation(fields: [authorId], references: [id])
   authorId Int?
 }
@@ -21,16 +22,25 @@ model User {
   password String  @default("")
   name     String?
   tweets    Tweet[]
-  Profile Profile?
+  Profile   Profile?
+  likedTweet LikedTweet[]
 }
 
 model Profile {
-  id Int @id @default(autoincrement())
+  id      Int @id @default(autoincrement())
   createdAt DateTime @default(now())
-  bio String?
+  bio     String?
   location String?
   website String?
-  avatar String?
-  userId Int? @unique
-  User User? @relation(fields: [userId], references: [id])
+  avatar  String?
+  userId  Int? @unique
+  User    User? @relation(fields: [userId], references: [id])
+}
+
+model LikedTweet {
+  id       Int     @default(autoincrement()) @id
+  tweet    Tweet
+  likedAt  DateTime @default(now())
+  userId   Int? 
+  User     User? @relation(fields: [userId], references: [id])
 }

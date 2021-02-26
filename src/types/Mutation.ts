@@ -120,6 +120,25 @@ export const Mutation = mutationType({
       },
     })
 
+    // ***** LIKE TWEET *****
+
+    t.field('likeTweet', {
+      type: 'LikedTweet',
+      args: {
+        id: intArg(),
+      },
+      resolve: (parent, { id }, ctx) => {
+        const userId = getUserId(ctx)
+        if (!userId) throw new Error('Could not authenticate user.')
+        return ctx.prisma.likedTweet.create({
+          data: {
+            tweet: { connect: { id: Number(id) } },
+            User: { connect: { id: Number(userId) } },
+          },
+        })
+      },
+    })
+
     // t.field('createDraft', {
     //   type: 'Post',
     //   args: {
@@ -135,18 +154,6 @@ export const Mutation = mutationType({
     //         content,
     //         published: false,
     //         author: { connect: { id: Number(userId) } },
-    //       },
-    //     })
-    //   },
-    // })
-
-    // t.nullable.field('deletePost', {
-    //   type: 'Post',
-    //   args: { id: nonNull(intArg()) },
-    //   resolve: (parent, { id }, ctx) => {
-    //     return ctx.prisma.post.delete({
-    //       where: {
-    //         id,
     //       },
     //     })
     //   },

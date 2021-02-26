@@ -9,7 +9,6 @@ import {
 import { setContext } from 'apollo-link-context'
 
 import './App.css'
-import Users from './components/Users'
 import Landing from './components/Landing'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
