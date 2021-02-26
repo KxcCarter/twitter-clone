@@ -11,10 +11,16 @@ const LeftNav = () => {
       <Link to="/users">
         <img src={favicon} alt="logo" style={{ width: '40px' }} />
       </Link>
-      <Link to="/users">
+      <Link to="/">
         <h2>
           <i className="fa fa-home" aria-hidden="true"></i>{' '}
           <span className="title">Home</span>
+        </h2>
+      </Link>
+      <Link to="/profile">
+        <h2>
+          <i className="fa fa-user" aria-hidden="true" />{' '}
+          <span className="title">Profile</span>
         </h2>
       </Link>
       <Link to="/profile">
