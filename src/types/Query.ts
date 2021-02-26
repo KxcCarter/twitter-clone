@@ -21,5 +21,12 @@ export const Query = queryType({
         return ctx.prisma.user.findMany()
       },
     })
+
+    t.list.field('tweets', {
+      type: 'Tweet',
+      resolve: (parent, args, ctx) => {
+        return ctx.prisma.tweet.findMany()
+      },
+    })
   },
 })
